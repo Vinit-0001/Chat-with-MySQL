@@ -1,5 +1,5 @@
 import streamlit as st
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 from langchain_community.utilities import SQLDatabase
 from langchain_core.messages import AIMessage, HumanMessage 
 from langchain_core.prompts import ChatPromptTemplate
@@ -7,7 +7,7 @@ from langchain_groq import ChatGroq
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
 
-# load_dotenv()
+load_dotenv()
 
 def get_sql_chain(db):
     template =  """
@@ -30,7 +30,7 @@ def get_sql_chain(db):
         SQL Query:
     """
     prompt = ChatPromptTemplate.from_template(template)
-    llm = ChatGroq(model="mixtral-8x7b-32768", temperature=0, api_key="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" )
+    llm = ChatGroq(model="llama-3.1-8b-instant", temperature=0, api_key="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" )
     def get_schema(_):
         return db.get_table_info()
   
@@ -55,7 +55,7 @@ def get_response(user_query: str,db: SQLDatabase, chat_history: list):
     SQL Response: {response}"""
 
     prompt = ChatPromptTemplate.from_template(template)
-    llm = ChatGroq(model="mixtral-8x7b-32768", temperature=0, api_key="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")
+    llm = ChatGroq(model="llama-3.1-8b-instant", temperature=0, api_key="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")
 
     chain = (
         RunnablePassthrough.assign(query = sql_chain).assign(
